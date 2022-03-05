@@ -1,6 +1,11 @@
 const outerBox = document.querySelector(".root .game-container .outer-box");
 const buttonSection = document.querySelector(".button-container");
 
+// color change function
+function colorChange() {
+  return Math.floor(Math.random() * 16777215).toString(16);
+}
+
 // make box in game-box
 function makeBoxes(rows, cols) {
   // set new value for property in css object
@@ -11,7 +16,7 @@ function makeBoxes(rows, cols) {
 
     // add event to box when hover will change color
     cell.addEventListener("mouseover", (e) => {
-      e.target.style.backgroundColor = "gray";
+      e.target.style.setProperty("--color", `#${colorChange()}`);
     });
     outerBox.appendChild(cell).className = "inner-box";
   }
@@ -25,7 +30,7 @@ buttonSection.addEventListener("click", function (e) {
   const innerBox = document.querySelectorAll(".inner-box");
   if (e.target.className === "clear-btn") {
     innerBox.forEach((box) => {
-      box.style.backgroundColor = "initial";
+      box.style.setProperty("--color", "white");
     });
   }
   if (e.target.className === "number-btn") {

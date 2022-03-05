@@ -3,6 +3,7 @@
 :root {
   --grid-rows: 1;
   --grid-cols: 1;
+  --color: white;
 }
 
 * {
@@ -54,4 +55,5 @@ button {
 .inner-box {
   border: 1px solid #111111;
   padding: 1em;
+  background-color: var(--color);
 }
