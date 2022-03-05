@@ -2,13 +2,12 @@ const outerBox = document.querySelector(".root .game-container .outer-box");
 const buttonSection = document.querySelector(".button-container");
 
 // make box in game-box
-function makeBoxes(rows, cols = rows) {
+function makeBoxes(rows, cols) {
   // set new value for property in css object
   outerBox.style.setProperty("--grid-rows", rows);
   outerBox.style.setProperty("--grid-cols", cols);
   for (let i = 0; i < rows * cols; i++) {
     const cell = document.createElement("div");
-    cell.textContent = i;
 
     // add event to box when hover will change color
     cell.addEventListener("mouseover", (e) => {
@@ -19,7 +18,7 @@ function makeBoxes(rows, cols = rows) {
 }
 
 // init the box
-makeBoxes(16);
+makeBoxes(16, 16);
 
 // add event to clear button section
 buttonSection.addEventListener("click", function (e) {
@@ -30,13 +29,18 @@ buttonSection.addEventListener("click", function (e) {
     });
   }
   if (e.target.className === "number-btn") {
-    let boxCount = prompt("Enter number of Box: ", 16);
-    // remove existing box element
-    let child = outerBox.firstElementChild;
-    while (child) {
-      outerBox.removeChild(child);
-      child = outerBox.firstElementChild;
+    let colCount = parseInt(prompt("Enter columns length: ", 16));
+    let rowCount = parseInt(prompt("Enter rows length: ", 16));
+    if (colCount >= 100 || rowCount >= 100) {
+      alert("exceed number range!");
+    } else {
+      // remove existing box element
+      let child = outerBox.firstElementChild;
+      while (child) {
+        outerBox.removeChild(child);
+        child = outerBox.firstElementChild;
+      }
+      makeBoxes(rowCount, colCount);
     }
-    makeBoxes(boxCount);
   }
 });
