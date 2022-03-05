@@ -1,34 +1,41 @@
 const outerBox = document.querySelector(".root .game-container .outer-box");
-const clearButton = document.querySelector(".clear-btn");
+const buttonSection = document.querySelector(".button-container");
 
-// make 1 box in game-box
-function makeBoxs(rows, cols) {
+// make box in game-box
+function makeBoxes(rows, cols = rows) {
   // set new value for property in css object
   outerBox.style.setProperty("--grid-rows", rows);
   outerBox.style.setProperty("--grid-cols", cols);
   for (let i = 0; i < rows * cols; i++) {
     const cell = document.createElement("div");
+    cell.textContent = i;
+
+    // add event to box when hover will change color
+    cell.addEventListener("mouseover", (e) => {
+      e.target.style.backgroundColor = "gray";
+    });
     outerBox.appendChild(cell).className = "inner-box";
   }
 }
 
-makeBoxs(16, 16);
+// init the box
+makeBoxes(16);
 
-// add event to box when hover will change color
-const innerBox = Array.from(outerBox.children);
-innerBox.forEach((box) => {
-  box.addEventListener("mouseover", (e) => {
-    e.target.style.backgroundColor = "gray";
-  });
-});
-
-// add event to clear the box state
-clearButton.addEventListener("click", function (e) {
-  const innerBox =
-    e.target.parentElement.parentElement.nextElementSibling.querySelectorAll(
-      ".outer-box .inner-box"
-    );
-  innerBox.forEach((box) => {
-    box.style.backgroundColor = "initial";
-  });
+// add event to clear button section
+buttonSection.addEventListener("click", function (e) {
+  const innerBox = document.querySelectorAll(".inner-box");
+  if (e.target.className === "clear-btn") {
+    innerBox.forEach((box) => {
+      box.style.backgroundColor = "initial";
+    });
+  }
+  if (e.target.className === "number-btn") {
+    let boxCount = prompt("Enter number of Box: ", 16);
+    let child = outerBox.firstElementChild;
+    while (child) {
+      outerBox.removeChild(child);
+      child = outerBox.firstElementChild;
+    }
+    makeBoxes(boxCount);
+  }
 });
