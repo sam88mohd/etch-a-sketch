@@ -31,6 +31,7 @@ buttonSection.addEventListener("click", function (e) {
   }
   if (e.target.className === "number-btn") {
     let boxCount = prompt("Enter number of Box: ", 16);
+    // remove existing box element
     let child = outerBox.firstElementChild;
     while (child) {
       outerBox.removeChild(child);
